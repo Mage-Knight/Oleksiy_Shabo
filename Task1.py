@@ -7,7 +7,6 @@ def filter_list(unfiltered_list):
     for element in unfiltered_list:
         if type(element) is str:
             filtered_list.remove(element)
-
     return filtered_list
 
 # Output result.

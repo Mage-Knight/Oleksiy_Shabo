@@ -9,7 +9,7 @@ def uppercase_sort(names_list):
     # Final list, which will be returned by the function.
     output_string = ""
 
-    # Filling modified_names_list.
+    # Fill modified_names_list.
     while names_list:
         next_dot_coma = names_list.find(';')
         next_double_dot = names_list.find(':')
@@ -21,7 +21,7 @@ def uppercase_sort(names_list):
             names_list = names_list[next_dot_coma+1:]
     modified_names_list.sort()
 
-    # Filling output_string.
+    # Fill output_string.
     for people in modified_names_list:
         output_string += '(' + people[0] + ', ' + people[1] + ')'
     return output_string

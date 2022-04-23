@@ -1,5 +1,5 @@
 # String that requires modification.
-s = "Fred:Corwill;Wilfred:Corwill;Barney:TornBull;Betty:Tornbull;Bjon:Tornbull;Raphael:Corwill;Alfred:Corwill";
+our_string = "Fred:Corwill;Wilfred:Corwill;Barney:TornBull;Betty:Tornbull;Bjon:Tornbull;Raphael:Corwill;Alfred:Corwill";
 
 # Function that modifies the string.
 def uppercase_sort(names_list):
@@ -27,5 +27,5 @@ def uppercase_sort(names_list):
     return output_string
 
 # Output result.
-print(uppercase_sort(s))
+print(uppercase_sort(our_string))
     

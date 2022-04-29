@@ -14,7 +14,7 @@ def num_to_address(num):
         num //= 2
         binary_list.append(modulus)
     binary_list.append(num)
-    binary_list += [0 for i in range(2 - len(binary_list))]
+    binary_list += [0 for i in range(32 - len(binary_list))]
     # Reverse number after division ending.
     binary_list = binary_list[::-1]
 

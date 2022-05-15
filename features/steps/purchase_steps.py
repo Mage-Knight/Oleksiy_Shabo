@@ -1,212 +1,194 @@
-
 from behave import given, when, then, fixture, use_fixture
-from selenium import webdriver
-
 from POM import page
 
-# @fixture
-# def setup_fixture(context):
-#     """ Connect driver, maximize window, modify settings and access website"""
-#     context.driver = webdriver.Chrome(executable_path = './chromedriver')
-#     context.driver.implicitly_wait(3)
-#     context.driver.maximize_window()
-#     context.driver.get("https://www.demoblaze.com/")
-#     yield context.driver
-#     """ Quit """
-#     context.driver.close()
-#     context.driver.quit()
+@fixture
+def login_page_fixture(context):
+    context.main_page = page.MainPage(context.driver)
+    context.main_page.click_login_button()
 
-# @fixture
-# def login_page_fixture(context):
-#     main_page = page.MainPage(context.driver)
-#     main_page.click_login_button()
+@fixture
+def login_fixture(context):
+    use_fixture(login_page_fixture, context)
+    context.main_page.username_text_element = "selenium_test"
+    context.main_page.password_text_element = "test123"
+    context.main_page.click_sub_login_button()
 
-# @fixture
-# def login_fixture(context):
-#     use_fixture(login_page_fixture, context)
-#     main_page = page.MainPage(context.driver)
-#     main_page.username_text_element = "selenium_test"
-#     main_page.password_text_element = "test123"
-#     main_page.click_sub_login_button()
+@fixture
+def laptops_fixture(context):
+    use_fixture(login_fixture, context)
+    context.main_page.refresh_page()
+    context.main_page.click_laptops_button()
 
-# @fixture
-# def laptops_fixture(context):
-#     use_fixture(login_fixture, context)
-#     main_page = page.MainPage(context.driver)
-#     main_page.refresh_page()
-#     main_page.click_laptops_button()
+@fixture
+def delli7_fixture(context):
+    use_fixture(laptops_fixture, context)
+    context.main_page.click_dell_i7_button()
 
-# @fixture
-# def delli7_fixture(context):
-#     use_fixture(laptops_fixture, context)
-#     main_page = page.MainPage(context.driver)
-#     main_page.click_dell_i7_button()
+@fixture
+def add_cart_fixture(context):
+    use_fixture(delli7_fixture, context)
+    context.laptop_page = page.DellI7Page(context.driver)
+    context.laptop_page.click_add_to_cart_button()
+    context.laptop_page.accept_pop_up()
 
-# @fixture
-# def delli7_fixture(context):
-#     use_fixture(login_page_fixture, context)
-#     main_page = page.MainPage(context.driver)
-#     main_page.click_dell_i7_button()
-
-# @fixture
-# def add_cart_fixture(context):
-#     use_fixture(delli7_fixture, context)
-#     laptop_page = page.DellI7Page(context.driver)
-#     laptop_page.click_add_to_cart_button()
-
-# @fixture
-# def order_fixture(context):
-#     use_fixture(add_cart_fixture, context)
-#     laptop_page = page.DellI7Pagecontext(context.driver)
-#     laptop_page.accept_pop_up()
-#     laptop_page.click_cart_button()
-#     cart_page = page.CartPage(context.driver)
-#     cart_page.place_order_button()
+@fixture
+def order_fixture(context):
+    use_fixture(add_cart_fixture, context)
+    context.laptop_page.click_cart_button()
+    context.cart_page = page.CartPage(context.driver)
+    context.cart_page.place_order_button()
 
 @given('that I am on the home page')
 def step_impl(context):
-    context.driver = webdriver.Chrome(executable_path = './chromedriver')
-    context.driver.implicitly_wait(3)
-    context.driver.maximize_window()
-    context.driver.get("https://www.demoblaze.com/")
-    yield context.driver
+    context.main_page = page.MainPage(context.driver)
 
 
 @when('I click on the log in button')
 def step_impl(context):
-    main_page = page.MainPage(context.driver)
-    main_page.click_login_button()
+    context.main_page.click_login_button()
 
 
 @then('I should see log in window')
 def step_impl(context):
-    main_page = page.MainPage(context.driver)
-    assert main_page.is_log_in()
-    """ Quit """
-    context.driver.close()
-    context.driver.quit()
+    assert context.main_page.is_log_in()
 
 
-@given(u'that I see log in window')
+@given('that I see log in window')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Given that I see log in window')
-
-
-@when(u'I enter "selenium_test" into username field')
+    use_fixture(login_page_fixture, context)
+    context.main_page = page.MainPage(context.driver)
+     
+    
+@when('I enter "selenium_test" into username field')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I enter "selenium_test" into username field')
+    context.main_page.username_text_element = "selenium_test"
 
 
-@when(u'I enter "test123" into password field')
+@when('I enter "test123" into password field')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I enter "test123" into password field')
+    context.main_page.password_text_element = "test123"
 
 
-@when(u'I click log in button')
+@when('I click log in button')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I click log in button')
+    context.main_page.click_sub_login_button()
 
 
-@then(u'I should log in')
+@then('I should log in as user')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then I should log in')
+    assert context.main_page.is_logged_in()
 
 
-@when(u'I click on the laptops category')
+@given('that I am on the home page logged in as user')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I click on the laptops category')
+    use_fixture(login_fixture, context)
 
 
-@then(u'I should see laptops category')
+@when('I click on the laptops category')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then I should see laptops category')
+    context.main_page.refresh_page()
+    context.main_page.click_laptops_button()
 
 
-@given(u'that I have laptops category opened')
+@then('I should see laptops category')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Given that I have laptops category opened')
+    assert context.main_page.is_laptops_page()
 
 
-@when(u'I click on the Dell i7 8gb')
+@given('that I have laptops category opened')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I click on the Dell i7 8gb')
+    use_fixture(laptops_fixture, context)
 
 
-@then(u'I should see Dell i7 8gb page')
+@when('I click on the Dell i7 8gb')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then I should see Dell i7 8gb page')
+    context.main_page.click_dell_i7_button()
 
 
-@given(u'that I have Dell i7 8gb page opened')
+@then('I should see Dell i7 8gb page')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Given that I have Dell i7 8gb page opened')
+    context.laptop_page = page.DellI7Page(context.driver)
+    assert context.laptop_page.check_page()
 
 
-@when(u'I click on the add to cart button')
+@given('that I have Dell i7 8gb page opened')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I click on the add to cart button')
+    use_fixture(delli7_fixture, context)
 
 
-@then(u'Dell i7 8gb laptop should be added to cart')
+@when('I click on the add to cart button')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then Dell i7 8gb laptop should be added to cart')
+    context.laptop_page = page.DellI7Page(context.driver)
+    context.laptop_page.click_add_to_cart_button()
 
 
-@when(u'I click on the cart button')
+@then('Dell i7 8gb laptop should be added to cart')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I click on the cart button')
+    assert context.laptop_page.check_add_to_cart()
+    context.laptop_page.accept_pop_up()
 
 
-@when(u'I click on the place order button')
+@given('that I have Dell i7 8gb page opened with Dell i7 8gb in cart')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I click on the place order button')
+    use_fixture(add_cart_fixture, context)
 
 
-@then(u'I should see place order window')
+@when('I click on the cart button')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then I should see place order window')
+    context.laptop_page.click_cart_button()
 
 
-@given(u'that I see pace order window')
+@when('I click on the place order button')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Given that I see pace order window')
+    context.cart_page = page.CartPage(context.driver)
+    context.cart_page.place_order_button()
 
 
-@when(u'I enter "Name" into name field')
+@then('I should see place order window')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I enter "Name" into name field')
+    assert context.cart_page.is_placed_order()
 
 
-@when(u'I enter "Country" into country field')
+@given('that I see pace order window')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I enter "Country" into country field')
+    use_fixture(order_fixture, context)
+    
 
-
-@when(u'I enter "City" into city field')
+@when('I enter "Name" into name field')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I enter "City" into city field')
+    context.cart_page.name_text_element = "Name"
 
 
-@when(u'I enter "1234-1234-1234-1234" into credit card field')
+@when('I enter "Country" into country field')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I enter "1234-1234-1234-1234" into credit card field')
+    context.cart_page.country_text_element = "Country"
 
 
-@when(u'I enter "December" into month field')
+@when('I enter "City" into city field')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I enter "December" into month field')
+    context.cart_page.city_text_element = "City"
 
 
-@when(u'I enter "2022" into year field')
+@when('I enter "1234-1234-1234-1234" into credit card field')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I enter "2022" into year field')
+    context.cart_page.card_text_element = "1234-1234-1234-1234"
 
 
-@when(u'I click on the purchase button')
+@when('I enter "December" into month field')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I click on the purchase button')
+    context.cart_page.month_text_element = "December"
 
 
-@then(u'I should see pop-up "Thank you for your purchase!"')
+@when('I enter "2022" into year field')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: Then I should see pop-up "Thank you for your purchase!"')
+    context.cart_page.year_text_element = "2022"
+
+
+@when('I click on the purchase button')
+def step_impl(context):
+    context.cart_page.click_purchase_button()
+
+
+@then('I should see pop-up "Thank you for your purchase!"')
+def step_impl(context):
+    assert context.cart_page.is_successful_purchase()

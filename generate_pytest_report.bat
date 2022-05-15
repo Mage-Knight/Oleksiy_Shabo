@@ -1,0 +1,1 @@
+call pytest -v -s --html=./Reports/pytest_report.html --self-contained-html ./Tests/test_purchase.py

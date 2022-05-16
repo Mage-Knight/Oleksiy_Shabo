@@ -59,14 +59,14 @@ def step_impl(context):
     context.main_page = page.MainPage(context.driver)
      
     
-@when('I enter "selenium_test" into username field')
-def step_impl(context):
-    context.main_page.username_text_element = "selenium_test"
+@when('I enter "{user}" into username field')
+def step_impl(context, user):
+    context.main_page.username_text_element = user
 
 
-@when('I enter "test123" into password field')
-def step_impl(context):
-    context.main_page.password_text_element = "test123"
+@when('I enter "{password}" into password field')
+def step_impl(context, password):
+    context.main_page.password_text_element = password
 
 
 @when('I click log in button')
@@ -154,34 +154,34 @@ def step_impl(context):
     use_fixture(order_fixture, context)
     
 
-@when('I enter "Name" into name field')
-def step_impl(context):
-    context.cart_page.name_text_element = "Name"
+@when('I enter "{name}" into name field')
+def step_impl(context, name):
+    context.cart_page.name_text_element = name
 
 
-@when('I enter "Country" into country field')
-def step_impl(context):
-    context.cart_page.country_text_element = "Country"
+@when('I enter "{country}" into country field')
+def step_impl(context, country):
+    context.cart_page.country_text_element = country
 
 
-@when('I enter "City" into city field')
-def step_impl(context):
-    context.cart_page.city_text_element = "City"
+@when('I enter "{city}" into city field')
+def step_impl(context, city):
+    context.cart_page.city_text_element = city
 
 
-@when('I enter "1234-1234-1234-1234" into credit card field')
-def step_impl(context):
-    context.cart_page.card_text_element = "1234-1234-1234-1234"
+@when('I enter "{card}" into credit card field')
+def step_impl(context, card):
+    context.cart_page.card_text_element = card
 
 
-@when('I enter "December" into month field')
-def step_impl(context):
-    context.cart_page.month_text_element = "December"
+@when('I enter "{month}" into month field')
+def step_impl(context, month):
+    context.cart_page.month_text_element = month
 
 
-@when('I enter "2022" into year field')
-def step_impl(context):
-    context.cart_page.year_text_element = "2022"
+@when('I enter "{year}" into year field')
+def step_impl(context, year):
+    context.cart_page.year_text_element = year
 
 
 @when('I click on the purchase button')

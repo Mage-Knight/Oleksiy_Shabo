@@ -1,7 +1,7 @@
 # Oleksiy_Shabo
 
 In this branch you can find different tests of www.demoblaze.com WebUI.
-Required libraries: selenium, pytest, pytest-html, behave, allure-behave. Also, you need to install Allure comand line tool <https://github.com/allure-framework/allure2/releases/tag/2.13.5> and add its bin folder location to PATH:
+Required libraries: selenium, pytest, pytest-html, behave, allure-behave. Also, you need to install Allure comand line tool <https://github.com/allure-framework/allure2/releases/tag/2.13.5> and add its bin folder location to PATH.
 User, which will be used to test the website:
 login: selenium_test
 password: test123

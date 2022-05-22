@@ -1,5 +1,4 @@
 from behave import given, when, then
-from dropbox_methods import *
 from os import path
 
 @given('I have a file named "{file}"')

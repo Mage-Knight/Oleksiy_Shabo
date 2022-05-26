@@ -18,7 +18,8 @@ def step_impl(context, file):
 
 @given('I have a file named "{file}" uploaded')
 def step_impl(context, file):
-    assert context.app.find_file(file), f"File named {file} doesn't exist in the dropbox app main directory"
+    if not context.app.find_file(file):
+        context.app.upload_file(file)
 
 
 @when('I send request to get "{file}" metadata from Dropbox')
